@@ -9,6 +9,8 @@ function App() {
   const [stats, setStats] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [homeName, setHomeName] = useState("");
+  const [awayName, setAwayName] = useState("");
 
   const getGames = async () => {
     try {
@@ -33,6 +35,20 @@ function App() {
     const updatedGames = stats.filter(game => game.id !== id);
     setStats(updatedGames);
   }  
+
+  const addGame = () => {
+    const newGame = { 
+      id:  Date.now(),
+      homeTeam: homeName,
+      awayTeam: awayName,
+      score: "0-0",
+      status:" Upcoming"
+    };
+
+    setStats([...stats, newGame]);
+    setHomeName("");
+    setAwayName("");
+  }
    
   useEffect(() => {
     getGames();      
@@ -52,6 +68,9 @@ function App() {
         {!isLoading && !error && (
           <div>
             <h2>Succesfully fetched {stats.length} items.</h2>
+            <input value= {homeName} onChange={(e) => setHomeName(e.target.value)} placeHolder= "Home Team"/>
+            <input value= {awayName} onChange={(e) => setAwayName(e.target.value)} placeholder= "Away Team"/>
+            <button onClick= {addGame}> Add Game </button>
             <ul className="stats-list">
               {stats.map((game) => (
                 <li key={game.id} className="stats-item">
