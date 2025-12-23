@@ -1,0 +1,14 @@
+.stats-list{
+    list-style: none;
+    padding: 0;
+}
+
+.stats-item{
+    background: #f4f4f4;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 5px solid #ff4500;
+    text-align: left;
+    color: #333;
+}
