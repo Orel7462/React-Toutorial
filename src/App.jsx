@@ -10,35 +10,41 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
+  const getGames = async () => {
+    try {
         setIsLoading(true);
-        const response = await fetch(API_URL);
+        const response = await fetch('/src/data/games.json');
         //const data = await response.json();
         //setStats(data);
         if(!response.ok){
-          throw new Error(`\ HTTP error! Status: ${response.status}`);
-        }else{
-          const data = await response.json();
-          setStats(data);
+          throw new Error('Could not load local games data');
         }
+        const data = await response.json();
+        setStats(data);
+        setError(null);
       } catch(err) {
-        console.error("Fetching failed:", err);
         setError(err.message);
-        setStats([]);
-
       } finally {
         setIsLoading(false);
       }
     }
-    fetchData();
+
+  const deleteGame = (id) => {
+    const updatedGames = stats.filter(game => game.id !== id);
+    setStats(updatedGames);
+  }  
+   
+  useEffect(() => {
+    getGames();      
   }, []);
 
-  return (
+  return(
     <>
       <header>
         <h1>Euroleage stats tracker!</h1>
+        <button onClick={getGames} className="refresh-btn">
+          {isLoading ? 'Refreshing...' : 'Refresh Scores'}
+        </button>
       </header>
       <main>
         {isLoading && <p>Loading stats</p>}
@@ -47,9 +53,17 @@ function App() {
           <div>
             <h2>Succesfully fetched {stats.length} items.</h2>
             <ul className="stats-list">
-              {stats.slice(0,10).map((item) => (
-                <li key={item.id} className="stats-item">
-                  {item.title}
+              {stats.map((game) => (
+                <li key={game.id} className="stats-item">
+                  <div className="game-info">
+                    <strong>{game.homeTeam} vs {game.awayTeam}</strong>
+                    <span className="game-score">{game.score}</span>
+                    <em className="game-status">({game.status})</em>
+                  </div>
+                  <button onClick={() => deleteGame(game.id)} className="delete-btn">
+                    X
+                  </button>
+                  
                 </li>
               ))}
             </ul>
@@ -60,6 +74,7 @@ function App() {
 
     </>
   )
-}
+ }
+
 
 export default App

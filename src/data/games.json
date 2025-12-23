@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "homeTeam": "Maccabi Tel Aviv",
+    "awayTeam": "Real Madrid",
+    "score": "85 - 82",
+    "status": "Final"
+  },
+  {
+    "id": 2,
+    "homeTeam": "Panathinaikos",
+    "awayTeam": "Fenerbahce",
+    "score": "78 - 71",
+    "status": "Final"
+  },
+  {
+    "id": 3,
+    "homeTeam": "Olympiacos",
+    "awayTeam": "Barcelona",
+    "score": "0 - 0",
+    "status": "20:00"
+  }
+]
