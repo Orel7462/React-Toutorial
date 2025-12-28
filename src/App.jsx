@@ -11,6 +11,7 @@ function App() {
   const [error, setError] = useState(null);
   const [homeName, setHomeName] = useState("");
   const [awayName, setAwayName] = useState("");
+  const [newScore, setNewScore] = useState("");
 
   const getGames = async () => {
     try {
@@ -49,7 +50,20 @@ function App() {
     setHomeName("");
     setAwayName("");
   }
-   
+
+  const updateScore = (id) => {
+    if(!newScore) return;
+    const updatedStats = stats.map((game) => {
+      if (game.id == id){
+        return{...game, score: newScore, status:"Live"};
+      }
+      return game;
+    });
+    
+    setStats(updatedStats);
+    setNewScore("");
+  }
+  
   useEffect(() => {
     getGames();      
   }, []);
@@ -79,10 +93,14 @@ function App() {
                     <span className="game-score">{game.score}</span>
                     <em className="game-status">({game.status})</em>
                   </div>
-                  <button onClick={() => deleteGame(game.id)} className="delete-btn">
-                    X
-                  </button>
-                  
+                  <input 
+                    type="text"
+                    placeholder="New score..."
+                    
+                    onBlur={(e) => setNewScore(e.target.value)}
+                  /> 
+                  <button onClick={() => updateScore(game.id)} className="update-btn"> Update Score </button>
+                  <button onClick={() => deleteGame(game.id)} className="delete-btn"> X </button>
                 </li>
               ))}
             </ul>
@@ -92,7 +110,7 @@ function App() {
       </main>
 
     </>
-  )
+  );
  }
 
 
