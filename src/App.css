@@ -1,3 +1,24 @@
+body {
+  margin: 0;
+  padding: 0;
+  
+  background-image: url('./assets/basketball-background.jpg');
+  background-size: cover;      
+  background-position: center; 
+  background-attachment: fixed; 
+  min-height: 100vh;
+}
+
+main {
+  background-color: rgba(255, 255, 255, 0.9); /* לבן עם 90% אטימות */
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  max-width: 800px;
+  margin: 20px auto; /* ממרכז את האפליקציה */
+}
+
+
 .stats-list{
     list-style: none;
     padding: 0;
@@ -14,6 +35,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+.stats-item.live {
+  background-color: #fff5f5;
+  border-left: 5px solid red;
+  box-shadow: 0 2px 8px rgba(255, 0, 0, 0.1);
 }
 
 .refresh-btn{
@@ -42,19 +69,105 @@
   transition: 0.3s;
 }
 
-update-btn  {
-  background-color: transparent;
-  color: blue;
-  border: 1px solid rgb(0, 183, 255);
-  border-radius: 4px;
-  padding: 2px 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: 0.3s;
-}
-
 
 .delete-btn:hover {
   background-color: red;
   color: white;
+}
+
+.input-error {
+  border: 2px solid red;
+  outline: none;
+}
+
+.input-standard {
+  border: 1px solid #ccc;
+}
+
+.game-status.final { color: black; font-weight: bold}
+.game-status.live { color: red; font-weight: bold; }
+.game-status.upcoming { color: green; font-weight: bold }
+
+.Leader {
+  color: #ffb700;
+  font-weight: 900;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+}
+
+
+.update-btn, .reset-btn {
+  padding: 4px 10px;    
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12px;      
+  transition: 0.3s;
+  border: 1px solid;     
+}
+
+.update-btn {
+  background-color: transparent;
+  color: #00b7ff;
+  border-color: #00b7ff;
+}
+
+.update-btn:hover {
+  background-color: #00b7ff;
+  color: white;
+}
+
+.reset-btn {
+  background-color: transparent;
+  color: green;
+  border-color: #cccccc;
+  margin-right: 5px;
+}
+
+.reset-btn:hover {
+  background-color: green;
+  color: white;
+}
+
+.live-dot {
+  height: 8px;
+  width: 8px;
+  background-color: red;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 5px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1;}
+  50% { opacity: 0.3;}
+  100% { opacity: 1;}
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px;
+  background: #f9f9f9;
+  border: 2px dashed #ccc;
+  border-radius: 10px;
+  color: #888;
+  margin-top: 20px;
+}
+
+.search-container {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 25px; /* עיצוב מעוגל ומודרני */
+  border: 2px solid #ff4500;
+  font-size: 16px;
+  outline: none;
+  box-sizing: border-box; /* מוודא שה-padding לא חורג מהרוחב */
+}
+
+.search-input:focus {
+  box-shadow: 0 0 8px rgba(255, 69, 0, 0.4);
 }

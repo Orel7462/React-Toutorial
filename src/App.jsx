@@ -11,6 +11,7 @@ function App() {
   const [error, setError] = useState(null);
   const [homeName, setHomeName] = useState("");
   const [awayName, setAwayName] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
 
 
   const getGames = async () => {
@@ -51,11 +52,11 @@ function App() {
     setAwayName("");
   }
 
-  const updateScore = (id, newVal) => {
+  const updateScore = (id, newVal, newStatus = "Live") => {
     if (!newVal) return;
     const updatedStats = stats.map((game) => {
       if (game.id == id) {
-        return { ...game, score: newVal, status: "Live" };
+        return { ...game, score: newVal,  status: newStatus };
       }
       return game;
     });
@@ -66,6 +67,15 @@ function App() {
   useEffect(() => {
     getGames();
   }, []);
+
+  const filteredGames = stats.filter(game => 
+    game.homeTeam.toLowerCase().includes(searchTerm.toLowerCase()) || game.awayTeam.toLowerCase().includes(searchTerm.toLowerCase())); 
+
+  const sortedStats = [...filteredGames].sort((a,b) => {
+    if (a.status.trim().toLowerCase() === "live") return -1;
+    if (b.status.trim().toLowerCase() === "live") return 1;
+    return 0;
+  });
 
   return (
     <>
@@ -81,11 +91,25 @@ function App() {
         {!isLoading && !error && (
           <div>
             <h2>Succesfully fetched {stats.length} items.</h2>
-            <input value={homeName} onChange={(e) => setHomeName(e.target.value)} placeHolder="Home Team" />
+            <input value={homeName} onChange={(e) => setHomeName(e.target.value)} placeholder="Home Team" />
             <input value={awayName} onChange={(e) => setAwayName(e.target.value)} placeholder="Away Team" />
             <button onClick={addGame}> Add Game </button>
-            <ul className="stats-list">
-              {stats.map((game) => (
+            <div className="search-container">
+              <input
+              type="text"
+              placeholder="Search Teams..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+              />
+            </div>
+            {stats.length === 0 ? (
+              <div className="empty-state">
+                <p>No games tracked yet. add one above!</p>
+              </div>  
+            ) : (             
+              <ul className="stats-list">
+              {sortedStats.map((game) => (
                 <GameItem
                   key={game.id}
                   game={game}
@@ -94,6 +118,7 @@ function App() {
                 />
               ))}
             </ul>
+            )}
             <p>Ready to display basketball data!</p>
           </div>
         )}

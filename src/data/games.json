@@ -18,6 +18,14 @@
     "homeTeam": "Olympiacos",
     "awayTeam": "Barcelona",
     "score": "0 - 0",
-    "status": "20:00"
+    "status": "Live"
+  },
+  {
+    "id": 4,
+    "homeTeam": "Maacabi",
+    "awayTeam": "Hapoel",
+    "score": "0 - 0",
+    "status": "Upcoming"
   }
+
 ]
